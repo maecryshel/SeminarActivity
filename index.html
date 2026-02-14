@@ -4,17 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seminar Guestbook</title>
-    <style>
-        body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; padding: 0 1rem; background-color: #f4f4f9; }
-        h1 { color: #333; text-align: center; }
-        .entry-form { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        input, textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        button { width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; }
-        button:hover { background-color: #218838; }
-        #guest-list { list-style: none; padding: 0; margin-top: 2rem; }
-        .guest-entry { background: white; border-bottom: 1px solid #eee; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
-        .guest-info strong { display: block; color: #555; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -29,56 +19,6 @@
     <ul id="guest-list">
         </ul>
 
-    <script>
-        // VIOLATION: Global variables polluting the namespace
-        const list = document.getElementById('guest-list');
-
-        // Load data on startup
-        window.onload = function() {
-            const savedData = localStorage.getItem('guestbook_entries');
-            if (savedData) {
-                const entries = JSON.parse(savedData);
-                entries.forEach(entry => renderEntry(entry.name, entry.learn));
-            }
-        };
-
-        // VIOLATION: Single function doing too many things (Validation, Saving, UI Update)
-        function addEntry() {
-            const name = document.getElementById('nameInput').value;
-            const learn = document.getElementById('learnInput').value;
-
-            if (name === '' || learn === '') {
-                alert("Please fill in both fields!");
-                return;
-            }
-
-            // 1. UI Logic
-            renderEntry(name, learn);
-
-            // 2. Data Persistence Logic
-            saveToStorage(name, learn);
-
-            // 3. Cleanup Logic
-            document.getElementById('nameInput').value = '';
-            document.getElementById('learnInput').value = '';
-        }
-
-        function renderEntry(name, learn) {
-            const li = document.createElement('li');
-            li.className = 'guest-entry';
-            li.innerHTML = `<div class="guest-info"><strong>${name}</strong><span>Learned: ${learn}</span></div>`;
-            list.appendChild(li);
-        }
-
-        function saveToStorage(name, learn) {
-            let entries = [];
-            const savedData = localStorage.getItem('guestbook_entries');
-            if (savedData) {
-                entries = JSON.parse(savedData);
-            }
-            entries.push({ name: name, learn: learn });
-            localStorage.setItem('guestbook_entries', JSON.stringify(entries));
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
